@@ -1,0 +1,15 @@
+{
+  "name": "CleanQR – Free Private QR Code Generator",
+  "short_name": "CleanQR",
+  "description": "Fast, private, client-side QR code generator with zero telemetry and zero watermarks.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#00a651",
+  "icons": [
+    {
+      "src": "./assets/img/IMG_20261002_051241_949.jpg",
+      "type": "image/jpeg"
+    }
+  ]
+}

@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CleanQR – Free Private QR Code Generator (No Sign-Up, No Watermarks)</title>
+    <meta name="description" content="Create custom, high-resolution QR codes in seconds. 100% private, client-side generation for URLs, Wi-Fi, vCard, WhatsApp, and events. No account, no dynamic fees." />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cleanqr.local/" />
+    <meta property="og:title" content="CleanQR – Free Private QR Code Generator" />
+    <meta property="og:description" content="Generate custom QR codes instantly in your browser with zero sign-up, zero watermarks, and 100% client-side privacy." />
+    <meta property="og:image" content="./assets/img/IMG_20261002_051242_302.jpg" />
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="CleanQR – Free Private QR Code Generator" />
+    <meta name="twitter:description" content="Generate custom QR codes instantly in your browser with zero sign-up, zero watermarks, and 100% client-side privacy." />
+    <meta name="twitter:image" content="./assets/img/IMG_20261002_051242_302.jpg" />
+
+    <link rel="canonical" href="https://cleanqr.local/" />
+    <link rel="icon" type="image/jpeg" href="./assets/img/IMG_20261002_051241_949.jpg" />
+    <link rel="apple-touch-icon" href="./assets/img/IMG_20261002_051241_949.jpg" />
+    <link rel="manifest" href="./site.webmanifest" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "CleanQR",
+          "url": "https://cleanqr.local/",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "description": "Free, privacy-first QR code generator that creates static QR codes locally in the browser with no watermarks and no sign-up.",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Will my QR codes ever expire?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. CleanQR generates pure static QR codes. The encoded data is stored directly in the QR code matrix, not on a redirect server. As long as your destination link or content exists, your QR code will work permanently."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is my data sent to any server?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Never. All encoding, customization, and rendering happen 100% client-side directly within your web browser using HTML5 Canvas and JavaScript."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I use generated QR codes for commercial projects?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, absolutely. All generated QR codes are free for both commercial and personal use with zero attribution or licensing fees."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col bg-slate-50 text-slate-900">
+    <!-- Header: 3-Zone Contract -->
+    <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-sm border-b border-slate-200">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+        <!-- Zone 1: Brand Wordmark -->
+        <a href="./" class="flex items-center hover:opacity-90 transition-opacity" aria-label="CleanQR">
+          <img src="./assets/img/IMG_20261002_051242_302.jpg" alt="CleanQR" class="h-8 max-h-8 w-auto object-contain" />
+        </a>
+
+        <!-- Zone 2: Navigation Links -->
+        <nav class="hidden md:flex items-center gap-6 text-sm font-medium text-slate-600">
+          <a href="./qr-code-generator/" class="text-blue-600 hover:text-blue-700 font-semibold">QR Generator</a>
+          <a href="#how-it-works" class="hover:text-slate-900 transition-colors">How It Works</a>
+          <a href="#static-vs-dynamic" class="hover:text-slate-900 transition-colors">Static vs Dynamic</a>
+          <a href="#faq" class="hover:text-slate-900 transition-colors">FAQ</a>
+          <a href="./about/" class="hover:text-slate-900 transition-colors">About</a>
+        </nav>
+
+        <!-- Zone 3: Primary Action -->
+        <div class="flex items-center gap-3">
+          <a href="./about/" class="text-xs font-semibold text-slate-700 bg-slate-100 hover:bg-slate-200 px-3.5 py-2 rounded-lg transition-colors whitespace-nowrap">
+            100% Private & Free
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Workspace with Reduced-Footprint Side Ad Rails -->
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      
+      <!-- Top Generator Title & Trust Notice (NO AD ABOVE THIS) -->
+      <div class="mb-5 text-center sm:text-left">
+        <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+          Free QR Code Generator
+        </h1>
+        <p class="mt-1 text-sm text-slate-600">
+          Create custom, high-resolution QR codes in seconds. Instant browser preview, vector SVG export, and permanent static codes.
+        </p>
+        <div class="mt-2 inline-flex items-center gap-1.5 text-xs font-medium text-emerald-700 bg-emerald-50 border border-emerald-200/80 px-2.5 py-1 rounded-md">
+          <svg class="w-3.5 h-3.5 shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+          </svg>
+          <span>Generated in your browser. Your QR content is not uploaded.</span>
+        </div>
+      </div>
+
+      <!-- Layout: Compact Left Ad Rail (>=1440px), Main Tool, Compact Right Ad Rail (>=1440px) -->
+      <div class="flex items-start justify-center gap-6">
+        
+        <!-- COMPACT LEFT AD RAIL (160px width, only on >=1440px screens) -->
+        <aside class="hidden 2xl:flex flex-col gap-4 sticky top-24 shrink-0" aria-label="Left Advertisement Slot">
+          <div class="ad-slot-rail">
+            <span class="ad-label">Advertisement</span>
+            <div class="ad-dimension">160 × 600</div>
+            <p class="text-[11px] text-slate-400 mt-2">Reserved Ad Space</p>
+          </div>
+        </aside>
+
+        <!-- MAIN GENERATOR WORKSPACE (Dominant Central Tool) -->
+        <div class="w-full max-w-5xl bg-white border border-slate-200 rounded-xl shadow-xs overflow-hidden flex flex-col">
+          
+          <!-- STEP 1: QR CONTENT TYPE SELECTOR TABS -->
+          <div class="border-b border-slate-200 bg-slate-50/75 p-2 sm:p-3 overflow-x-auto">
+            <div class="flex items-center gap-1.5 min-w-max" role="tablist" aria-label="QR Code Content Types">
+              <button data-qr-type="url" role="tab" aria-selected="true" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors bg-blue-600 text-white shadow-xs">
+                Website URL / Link
+              </button>
+              <button data-qr-type="wifi" role="tab" aria-selected="false" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors bg-white text-slate-700 hover:bg-slate-100">
+                Wi-Fi
+              </button>
+              <button data-qr-type="vcard" role="tab" aria-selected="false" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors bg-white text-slate-700 hover:bg-slate-100">
+                Contact (vCard)
+              </button>
+              <button data-qr-type="email" role="tab" aria-selected="false" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors bg-white text-slate-700 hover:bg-slate-100">
+                Email
+              </button>
+              <button data-qr-type="sms" role="tab" aria-selected="false" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors bg-white text-slate-700 hover:bg-slate-100">
+                SMS
+              </button>
+              <button data-qr-type="phone" role="tab" aria-selected="false" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors bg-white text-slate-700 hover:bg-slate-100">
+                Phone
+              </button>
+              <button data-qr-type="whatsapp" role="tab" aria-selected="false" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors bg-white text-slate-700 hover:bg-slate-100">
+                WhatsApp
+              </button>
+              <button data-qr-type="location" role="tab" aria-selected="false" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors bg-white text-slate-700 hover:bg-slate-100">
+                Location
+              </button>
+              <button data-qr-type="event" role="tab" aria-selected="false" class="px-3 py-1.5 text-xs sm:text-sm font-medium rounded-lg transition-colors bg-white text-slate-700 hover:bg-slate-100">
+                Calendar Event
+              </button>
+            </div>
+          </div>
+
+          <!-- STEP 2: CONTENT INPUT FORM -->
+          <div class="p-4 sm:p-5 border-b border-slate-200 bg-white">
+            <div class="flex items-center justify-between pb-2 mb-3 border-b border-slate-100">
+              <div class="flex items-center gap-2">
+                <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">1</span>
+                <h2 class="text-xs font-semibold uppercase tracking-wider text-slate-700">Enter QR Content</h2>
+              </div>
+              <button type="button" id="sample-btn" class="text-xs text-blue-600 hover:text-blue-800 font-medium">
+                Fill Sample Data
+              </button>
+            </div>
+
+            <!-- Validation Alert -->
+            <div id="validation-alert" class="hidden mb-3 p-2.5 text-xs font-medium text-red-800 bg-red-50 border border-red-200 rounded-lg" role="alert"></div>
+
+            <!-- TYPE 1: URL -->
+            <div id="form-url" class="qr-form-panel space-y-2">
+              <div>
+                <label for="input-url" class="block text-xs font-semibold text-slate-700 mb-1">Website URL / Link *</label>
+                <input type="url" id="input-url" name="url" placeholder="https://example.com" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                <p class="mt-1 text-[11px] text-slate-500">Enter a website address or link to create a QR code that opens it when scanned.</p>
+              </div>
+            </div>
+
+            <!-- TYPE 2: WI-FI -->
+            <div id="form-wifi" class="qr-form-panel hidden space-y-2">
+              <div>
+                <label for="input-wifi-ssid" class="block text-xs font-semibold text-slate-700 mb-1">Network Name (SSID) *</label>
+                <input type="text" id="input-wifi-ssid" name="ssid" placeholder="e.g. Office_Guest" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                  <label for="input-wifi-security" class="block text-xs font-semibold text-slate-700 mb-1">Security Type</label>
+                  <select id="input-wifi-security" name="security" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-white">
+                    <option value="WPA" selected>WPA / WPA2 / WPA3</option>
+                    <option value="WEP">WEP</option>
+                    <option value="nopass">None (Open Network)</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="input-wifi-pass" class="block text-xs font-semibold text-slate-700 mb-1">Password</label>
+                  <input type="text" id="input-wifi-pass" name="password" placeholder="Wi-Fi Password" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none" />
+                </div>
+              </div>
+              <div class="flex items-center gap-2 pt-1">
+                <input type="checkbox" id="input-wifi-hidden" name="hidden" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+                <label for="input-wifi-hidden" class="text-xs text-slate-700">Hidden Network</label>
+              </div>
+            </div>
+
+            <!-- TYPE 4: CONTACT / VCARD -->
+            <div id="form-vcard" class="qr-form-panel hidden space-y-2">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label for="input-vcard-first" class="block text-xs font-semibold text-slate-700 mb-1">First Name</label>
+                  <input type="text" id="input-vcard-first" name="firstName" placeholder="Jane" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+                </div>
+                <div>
+                  <label for="input-vcard-last" class="block text-xs font-semibold text-slate-700 mb-1">Last Name</label>
+                  <input type="text" id="input-vcard-last" name="lastName" placeholder="Doe" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label for="input-vcard-org" class="block text-xs font-semibold text-slate-700 mb-1">Organization</label>
+                  <input type="text" id="input-vcard-org" name="org" placeholder="Company or Studio" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+                </div>
+                <div>
+                  <label for="input-vcard-title" class="block text-xs font-semibold text-slate-700 mb-1">Job Title</label>
+                  <input type="text" id="input-vcard-title" name="title" placeholder="Lead Engineer" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+                </div>
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label for="input-vcard-phone" class="block text-xs font-semibold text-slate-700 mb-1">Mobile Phone</label>
+                  <input type="tel" id="input-vcard-phone" name="phone" placeholder="+1 555 123 4567" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+                </div>
+                <div>
+                  <label for="input-vcard-email" class="block text-xs font-semibold text-slate-700 mb-1">Email</label>
+                  <input type="email" id="input-vcard-email" name="email" placeholder="jane@example.com" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+                </div>
+              </div>
+              <div>
+                <label for="input-vcard-url" class="block text-xs font-semibold text-slate-700 mb-1">Website</label>
+                <input type="url" id="input-vcard-url" name="url" placeholder="https://example.com" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+              </div>
+            </div>
+
+            <!-- TYPE 5: EMAIL -->
+            <div id="form-email" class="qr-form-panel hidden space-y-2">
+              <div>
+                <label for="input-email-to" class="block text-xs font-semibold text-slate-700 mb-1">Recipient Email *</label>
+                <input type="email" id="input-email-to" name="email" placeholder="contact@domain.com" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg" />
+              </div>
+              <div>
+                <label for="input-email-subject" class="block text-xs font-semibold text-slate-700 mb-1">Subject</label>
+                <input type="text" id="input-email-subject" name="subject" placeholder="General Inquiry" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg" />
+              </div>
+              <div>
+                <label for="input-email-body" class="block text-xs font-semibold text-slate-700 mb-1">Message Body</label>
+                <textarea id="input-email-body" name="body" rows="2" placeholder="Hello, I would like to..." class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg"></textarea>
+              </div>
+            </div>
+
+            <!-- TYPE 6: SMS -->
+            <div id="form-sms" class="qr-form-panel hidden space-y-2">
+              <div>
+                <label for="input-sms-phone" class="block text-xs font-semibold text-slate-700 mb-1">Recipient Phone Number *</label>
+                <input type="tel" id="input-sms-phone" name="phone" placeholder="+1 555 123 4567" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg" />
+              </div>
+              <div>
+                <label for="input-sms-message" class="block text-xs font-semibold text-slate-700 mb-1">Pre-filled SMS Text</label>
+                <textarea id="input-sms-message" name="message" rows="2" placeholder="Text message..." class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg"></textarea>
+              </div>
+            </div>
+
+            <!-- TYPE 7: PHONE -->
+            <div id="form-phone" class="qr-form-panel hidden space-y-2">
+              <div>
+                <label for="input-phone-num" class="block text-xs font-semibold text-slate-700 mb-1">Phone Number *</label>
+                <input type="tel" id="input-phone-num" name="phone" placeholder="+1 800 555 0199" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg" />
+              </div>
+            </div>
+
+            <!-- TYPE 8: WHATSAPP -->
+            <div id="form-whatsapp" class="qr-form-panel hidden space-y-2">
+              <div>
+                <label for="input-wa-phone" class="block text-xs font-semibold text-slate-700 mb-1">WhatsApp Number with Country Code (digits only) *</label>
+                <input type="tel" id="input-wa-phone" name="phone" placeholder="14155552671" class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg" />
+                <p class="mt-1 text-[11px] text-slate-500">Example: 14155552671 (US) or 447911123456 (UK). Do not include + or spaces.</p>
+              </div>
+              <div>
+                <label for="input-wa-msg" class="block text-xs font-semibold text-slate-700 mb-1">Pre-filled Chat Message (Optional)</label>
+                <textarea id="input-wa-msg" name="message" rows="2" placeholder="Hi! I saw your QR code." class="w-full px-3 py-2 text-sm border border-slate-300 rounded-lg"></textarea>
+              </div>
+            </div>
+
+            <!-- TYPE 9: LOCATION -->
+            <div id="form-location" class="qr-form-panel hidden space-y-2">
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label for="input-loc-lat" class="block text-xs font-semibold text-slate-700 mb-1">Latitude *</label>
+                  <input type="number" step="any" id="input-loc-lat" name="lat" placeholder="37.7749" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+                </div>
+                <div>
+                  <label for="input-loc-lng" class="block text-xs font-semibold text-slate-700 mb-1">Longitude *</label>
+                  <input type="number" step="any" id="input-loc-lng" name="lng" placeholder="-122.4194" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+                </div>
+              </div>
+              <div>
+                <label for="input-loc-label" class="block text-xs font-semibold text-slate-700 mb-1">Place Name / Label (Optional)</label>
+                <input type="text" id="input-loc-label" name="label" placeholder="Main Store Entrance" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+              </div>
+            </div>
+
+            <!-- TYPE 10: CALENDAR EVENT -->
+            <div id="form-event" class="qr-form-panel hidden space-y-2">
+              <div>
+                <label for="input-evt-title" class="block text-xs font-semibold text-slate-700 mb-1">Event Title *</label>
+                <input type="text" id="input-evt-title" name="title" placeholder="Quarterly Launch Meeting" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+              </div>
+              <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                <div>
+                  <label for="input-evt-start" class="block text-xs font-semibold text-slate-700 mb-1">Start Date & Time *</label>
+                  <input type="datetime-local" id="input-evt-start" name="start" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+                </div>
+                <div>
+                  <label for="input-evt-end" class="block text-xs font-semibold text-slate-700 mb-1">End Date & Time</label>
+                  <input type="datetime-local" id="input-evt-end" name="end" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+                </div>
+              </div>
+              <div>
+                <label for="input-evt-loc" class="block text-xs font-semibold text-slate-700 mb-1">Event Location</label>
+                <input type="text" id="input-evt-loc" name="location" placeholder="Convention Center or Room 402" class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg" />
+              </div>
+              <div>
+                <label for="input-evt-desc" class="block text-xs font-semibold text-slate-700 mb-1">Event Description (Optional)</label>
+                <textarea id="input-evt-desc" name="description" rows="2" placeholder="Agenda, notes, or instructions..." class="w-full px-3 py-1.5 text-sm border border-slate-300 rounded-lg"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <!-- UNIFIED WORKSPACE: STICKY LIVE PREVIEW (LEFT) + ORGANIZED CUSTOMIZATION (RIGHT) -->
+          <div class="p-4 sm:p-6 bg-slate-50/50">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+              
+              <!-- LEFT COLUMN: STICKY LIVE QR PREVIEW & ACTION BAR (5 cols on desktop) -->
+              <div class="lg:col-span-5 sticky-preview-rail space-y-4">
+                <div class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-xs">
+                  
+                  <!-- Preview Header with Live/Sample Status Indicator -->
+                  <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                    <div class="flex items-center gap-2">
+                      <span class="w-5 h-5 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">2</span>
+                      <h2 class="text-xs font-bold uppercase tracking-wider text-slate-700">Live QR Preview</h2>
+                    </div>
+                    <span id="preview-badge" class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[11px] font-semibold bg-amber-50 text-amber-700 border border-amber-200">
+                      <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>Sample QR
+                    </span>
+                  </div>
+
+                  <!-- Sample Indicator Notice -->
+                  <div id="sample-notice" class="mt-2.5 p-2 bg-blue-50 border border-blue-200/80 rounded-lg text-[11px] text-blue-800 flex items-start gap-1.5">
+                    <svg class="w-3.5 h-3.5 mt-0.5 shrink-0 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span>Showing sample QR (<code class="font-mono">example.com</code>). Enter content above to replace.</span>
+                  </div>
+
+                  <!-- Contrast Warning Alert -->
+                  <div id="contrast-alert" class="hidden mt-2.5 p-2 text-[11px] text-amber-900 bg-amber-50 border border-amber-200 rounded-lg" role="alert">
+                    Low contrast warning: Smartphone cameras scan dark codes on light backgrounds most reliably.
+                  </div>
+
+                  <!-- QR Canvas Container with Scan-Safe Area -->
+                  <div id="canvas-container" class="mt-3 p-4 bg-slate-100/70 border border-slate-200 rounded-xl flex flex-col items-center justify-center shadow-inner relative">
+                    <canvas id="qr-canvas" width="280" height="280" class="max-w-[240px] sm:max-w-[260px] w-full aspect-square bg-white rounded-lg shadow-xs"></canvas>
+                    <div class="mt-2 text-center">
+                      <span class="text-[10px] text-slate-400 font-semibold tracking-wide uppercase">Scan-Safe Area</span>
+                    </div>
+                  </div>
+
+                  <!-- Encoded Data Summary -->
+                  <div class="mt-3 px-3 py-2 bg-slate-50 rounded-lg border border-slate-200 flex items-center justify-between gap-2">
+                    <div class="truncate text-xs font-mono text-slate-600" id="encoded-text-preview">https://example.com</div>
+                    <span id="char-count" class="text-[11px] font-mono text-slate-400 shrink-0">19 chars</span>
+                  </div>
+
+                  <!-- Quick Actions: Copy Image & Print -->
+                  <div class="grid grid-cols-2 gap-2 mt-3">
+                    <button type="button" id="copy-btn" class="flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg transition-colors">
+                      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                      </svg>
+                      <span>Copy Image</span>
+                    </button>
+                    <button type="button" id="print-btn" class="flex items-center justify-center gap-1.5 px-3 py-2 text-xs font-medium text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg transition-colors">
+                      <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                      </svg>
+                      <span>Print QR</span>
+                    </button>
+                  </div>
+
+                  <!-- Download Section: Format & Primary CTA -->
+                  <div class="mt-4 pt-3 border-t border-slate-100 flex flex-col gap-2.5">
+                    <div class="flex items-center justify-between">
+                      <label for="format-select" class="text-xs font-semibold text-slate-700">Export Format:</label>
+                      <select id="format-select" class="px-2.5 py-1 text-xs border border-slate-300 rounded-md bg-white font-medium focus:ring-1 focus:ring-blue-500">
+                        <option value="png" selected>PNG (.png)</option>
+                        <option value="jpg">JPEG (.jpg)</option>
+                        <option value="svg">Vector SVG (.svg)</option>
+                      </select>
+                    </div>
+
+                    <button type="button" id="download-btn" class="w-full py-2.5 px-4 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-sm transition-colors flex items-center justify-center gap-2">
+                      <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                      <span>Download QR Code</span>
+                    </button>
+                    <p class="text-[10px] text-center text-slate-400">Scan to test directly with your phone camera</p>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- RIGHT COLUMN: ORGANIZED CUSTOMIZATION CONTROLS (7 cols on desktop) -->
+              <div class="lg:col-span-7 space-y-4">
+                
+                <!-- GROUP 1: APPEARANCE -->
+                <div class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-xs space-y-4">
+                  <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-blue-600"></span>
+                      Appearance & Colors
+                    </h3>
+                    <span class="text-[11px] text-emerald-600 font-medium">Updates Immediately</span>
+                  </div>
+
+                  <!-- Colors: Foreground, Background, Transparent -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Foreground -->
+                    <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-1.5">
+                      <label for="fg-color" class="block text-xs font-semibold text-slate-700">QR Code Color</label>
+                      <div class="flex items-center gap-2">
+                        <input type="color" id="fg-color" value="#000000" aria-label="QR foreground color picker" class="w-8 h-8 p-0.5 border border-slate-300 rounded cursor-pointer" />
+                        <input type="text" id="fg-hex" value="#000000" maxlength="7" aria-label="Foreground color hex code" class="w-20 px-2 py-1 text-xs font-mono border border-slate-300 rounded bg-white" />
+                        <div class="flex items-center gap-1 ml-auto">
+                          <button type="button" data-color-target="fg" data-color-value="#000000" aria-label="Set foreground to black" class="w-5 h-5 rounded bg-black border border-slate-300" title="Black"></button>
+                          <button type="button" data-color-target="fg" data-color-value="#0f172a" aria-label="Set foreground to navy" class="w-5 h-5 rounded bg-slate-900 border border-slate-300" title="Navy"></button>
+                          <button type="button" data-color-target="fg" data-color-value="#1e3a8a" aria-label="Set foreground to deep blue" class="w-5 h-5 rounded bg-blue-900 border border-slate-300" title="Blue"></button>
+                          <button type="button" data-color-target="fg" data-color-value="#064e3b" aria-label="Set foreground to dark emerald" class="w-5 h-5 rounded bg-emerald-900 border border-slate-300" title="Emerald"></button>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Background -->
+                    <div class="p-3 bg-slate-50 border border-slate-200 rounded-lg space-y-1.5">
+                      <div class="flex items-center justify-between">
+                        <label for="bg-color" class="block text-xs font-semibold text-slate-700">Background Color</label>
+                        <label class="flex items-center gap-1 text-[11px] text-slate-600 cursor-pointer">
+                          <input type="checkbox" id="transparent-bg" aria-label="Transparent background" class="rounded border-slate-300 text-blue-600 focus:ring-blue-500" />
+                          <span>Transparent</span>
+                        </label>
+                      </div>
+                      <div class="flex items-center gap-2">
+                        <input type="color" id="bg-color" value="#ffffff" aria-label="QR background color picker" class="w-8 h-8 p-0.5 border border-slate-300 rounded cursor-pointer" />
+                        <input type="text" id="bg-hex" value="#ffffff" maxlength="7" aria-label="Background color hex code" class="w-20 px-2 py-1 text-xs font-mono border border-slate-300 rounded bg-white" />
+                        <div class="flex items-center gap-1 ml-auto">
+                          <button type="button" data-color-target="bg" data-color-value="#ffffff" aria-label="Set background to white" class="w-5 h-5 rounded bg-white border border-slate-300" title="White"></button>
+                          <button type="button" data-color-target="bg" data-color-value="#f8fafc" aria-label="Set background to off-white" class="w-5 h-5 rounded bg-slate-50 border border-slate-300" title="Off-White"></button>
+                          <button type="button" data-color-target="bg" data-color-value="#f0fdf4" aria-label="Set background to mint" class="w-5 h-5 rounded bg-emerald-50 border border-slate-300" title="Mint"></button>
+                          <button type="button" data-color-target="bg" data-color-value="#fff1f2" aria-label="Set background to rose" class="w-5 h-5 rounded bg-rose-50 border border-slate-300" title="Rose"></button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Shapes: Module Styles & Eye Styles -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <!-- Module Style -->
+                    <div>
+                      <span class="block text-xs font-semibold text-slate-700 mb-1.5">Dot / Module Style</span>
+                      <div class="grid grid-cols-4 gap-1.5">
+                        <label class="flex flex-col items-center p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-white text-center">
+                          <input type="radio" name="module-style" value="square" checked class="sr-only" />
+                          <span class="text-xs font-medium text-slate-800">Square</span>
+                        </label>
+                        <label class="flex flex-col items-center p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-white text-center">
+                          <input type="radio" name="module-style" value="rounded" class="sr-only" />
+                          <span class="text-xs font-medium text-slate-800">Rounded</span>
+                        </label>
+                        <label class="flex flex-col items-center p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-white text-center">
+                          <input type="radio" name="module-style" value="dots" class="sr-only" />
+                          <span class="text-xs font-medium text-slate-800">Dots</span>
+                        </label>
+                        <label class="flex flex-col items-center p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-white text-center">
+                          <input type="radio" name="module-style" value="soft" class="sr-only" />
+                          <span class="text-xs font-medium text-slate-800">Soft</span>
+                        </label>
+                      </div>
+                    </div>
+
+                    <!-- Eye Style -->
+                    <div>
+                      <span class="block text-xs font-semibold text-slate-700 mb-1.5">Corner Finder Eyes</span>
+                      <div class="grid grid-cols-3 gap-1.5">
+                        <label class="flex flex-col items-center p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-white text-center">
+                          <input type="radio" name="eye-style" value="square" checked class="sr-only" />
+                          <span class="text-xs font-medium text-slate-800">Square</span>
+                        </label>
+                        <label class="flex flex-col items-center p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-white text-center">
+                          <input type="radio" name="eye-style" value="rounded" class="sr-only" />
+                          <span class="text-xs font-medium text-slate-800">Rounded</span>
+                        </label>
+                        <label class="flex flex-col items-center p-2 bg-slate-50 border border-slate-200 rounded-lg cursor-pointer hover:bg-white text-center">
+                          <input type="radio" name="eye-style" value="circle" class="sr-only" />
+                          <span class="text-xs font-medium text-slate-800">Circle</span>
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- GROUP 2: LOGO EMBEDDING -->
+                <div class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-xs space-y-3">
+                  <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
+                      Center Logo (Optional)
+                    </h3>
+                    <span class="text-[11px] text-slate-400">100% In-Browser</span>
+                  </div>
+
+                  <!-- Dropzone -->
+                  <div id="logo-dropzone" class="border-2 border-dashed border-slate-200 hover:border-blue-400 rounded-lg p-3.5 text-center cursor-pointer transition-colors bg-slate-50/50">
+                    <input type="file" id="logo-input" accept="image/png, image/jpeg, image/webp" class="sr-only" />
+                    <svg class="mx-auto h-6 w-6 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                    </svg>
+                    <p class="mt-1 text-xs text-slate-600 font-medium">Click or drag & drop a logo (PNG, JPG, WebP &lt; 2MB)</p>
+                  </div>
+
+                  <!-- Logo Preview Container -->
+                  <div id="logo-preview-container" class="hidden flex items-center justify-between p-3 bg-slate-50 border border-slate-200 rounded-lg">
+                    <div class="flex items-center gap-3">
+                      <img id="logo-thumb" src="" alt="Uploaded Logo Preview" class="w-10 h-10 object-contain bg-white rounded border border-slate-200 p-1" />
+                      <div>
+                        <span class="text-xs font-semibold text-slate-800 block">Logo Attached</span>
+                        <span class="text-[11px] text-emerald-600 font-medium">Error Correction set to High (H)</span>
+                      </div>
+                    </div>
+
+                    <div class="flex items-center gap-3">
+                      <div class="flex items-center gap-1.5">
+                        <label for="logo-size-slider" class="text-xs text-slate-600 font-medium">Size:</label>
+                        <input type="range" id="logo-size-slider" min="10" max="22" value="15" class="w-16 accent-blue-600" />
+                        <span id="logo-size-value" class="text-xs font-mono text-slate-600">15%</span>
+                      </div>
+                      <button type="button" id="logo-remove-btn" class="text-xs text-red-600 hover:text-red-700 font-semibold px-2 py-1 bg-red-50 rounded">
+                        Remove
+                      </button>
+                    </div>
+                  </div>
+
+                  <div id="logo-warning" class="hidden text-xs text-amber-700 bg-amber-50 p-2 rounded border border-amber-200">
+                    Notice: Larger logo sizes (> 20%) require clean printing and good lighting for standard phone cameras.
+                  </div>
+                </div>
+
+                <!-- GROUP 3: QR QUALITY & DIMENSIONS -->
+                <div class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-xs space-y-3">
+                  <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-slate-600"></span>
+                      QR Quality & Sizing
+                    </h3>
+                  </div>
+
+                  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                    <!-- Error Correction -->
+                    <div>
+                      <label for="ec-select" class="block text-xs font-semibold text-slate-700 mb-1">Error Correction</label>
+                      <select id="ec-select" class="w-full px-2.5 py-1.5 text-xs border border-slate-300 rounded-md bg-white focus:ring-1 focus:ring-blue-500">
+                        <option value="L">L – 7% recovery</option>
+                        <option value="M" selected>M – 15% recovery</option>
+                        <option value="Q">Q – 25% recovery</option>
+                        <option value="H">H – 30% (Best for logos)</option>
+                      </select>
+                    </div>
+
+                    <!-- Quiet Zone -->
+                    <div>
+                      <div class="flex items-center justify-between mb-1">
+                        <label for="margin-slider" class="text-xs font-semibold text-slate-700">Quiet Zone (Margin)</label>
+                        <span id="margin-value" class="text-xs font-mono text-slate-600">4</span>
+                      </div>
+                      <input type="range" id="margin-slider" min="0" max="8" value="4" class="w-full accent-blue-600" />
+                    </div>
+
+                    <!-- Output Resolution -->
+                    <div>
+                      <label for="size-select" class="block text-xs font-semibold text-slate-700 mb-1">Export Resolution</label>
+                      <select id="size-select" class="w-full px-2.5 py-1.5 text-xs border border-slate-300 rounded-md bg-white focus:ring-1 focus:ring-blue-500">
+                        <option value="512" selected>512 × 512 px (Web)</option>
+                        <option value="1024">1024 × 1024 px (High-Res)</option>
+                        <option value="2048">2048 × 2048 px (Print Master)</option>
+                      </select>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- GROUP 4: PRESETS -->
+                <div class="bg-white border border-slate-200 rounded-xl p-4 sm:p-5 shadow-xs space-y-3">
+                  <div class="flex items-center justify-between pb-2 border-b border-slate-100">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+                      <span class="w-2 h-2 rounded-full bg-emerald-600"></span>
+                      Style Presets
+                    </h3>
+                  </div>
+
+                  <div class="grid grid-cols-2 sm:grid-cols-5 gap-2">
+                    <button type="button" data-preset="classic" class="flex flex-col items-center justify-center p-2 bg-slate-50 border border-slate-200 rounded-lg hover:border-slate-400 transition-colors text-center">
+                      <div class="w-4 h-4 bg-black rounded-xs mb-1"></div>
+                      <span class="text-xs font-medium text-slate-800">Classic</span>
+                    </button>
+                    <button type="button" data-preset="modernNavy" class="flex flex-col items-center justify-center p-2 bg-slate-50 border border-slate-200 rounded-lg hover:border-slate-400 transition-colors text-center">
+                      <div class="w-4 h-4 bg-slate-900 rounded-md mb-1"></div>
+                      <span class="text-xs font-medium text-slate-800">Navy</span>
+                    </button>
+                    <button type="button" data-preset="forestEmerald" class="flex flex-col items-center justify-center p-2 bg-slate-50 border border-slate-200 rounded-lg hover:border-slate-400 transition-colors text-center">
+                      <div class="w-4 h-4 bg-emerald-800 rounded-md mb-1"></div>
+                      <span class="text-xs font-medium text-slate-800">Forest</span>
+                    </button>
+                    <button type="button" data-preset="minimalSlate" class="flex flex-col items-center justify-center p-2 bg-slate-50 border border-slate-200 rounded-lg hover:border-slate-400 transition-colors text-center">
+                      <div class="w-4 h-4 bg-slate-600 rounded-full mb-1"></div>
+                      <span class="text-xs font-medium text-slate-800">Slate Dots</span>
+                    </button>
+                    <button type="button" data-preset="crimsonImpact" class="flex flex-col items-center justify-center p-2 bg-slate-50 border border-slate-200 rounded-lg hover:border-slate-400 transition-colors text-center col-span-2 sm:col-span-1">
+                      <div class="w-4 h-4 bg-rose-900 rounded-md mb-1"></div>
+                      <span class="text-xs font-medium text-slate-800">Crimson</span>
+                    </button>
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- COMPACT RIGHT AD RAIL (160px width, only on >=1440px screens) -->
+        <aside class="hidden 2xl:flex flex-col gap-4 sticky top-24 shrink-0" aria-label="Right Advertisement Slot">
+          <div class="ad-slot-rail">
+            <span class="ad-label">Advertisement</span>
+            <div class="ad-dimension">160 × 600</div>
+            <p class="text-[11px] text-slate-400 mt-2">Reserved Ad Space</p>
+          </div>
+        </aside>
+
+      </div>
+
+      <!-- MOBILE AD SLOT: PLACED STRICTLY BELOW THE GENERATOR & DOWNLOAD SECTION (Never above) -->
+      <section class="mt-8 mb-4 max-w-5xl mx-auto flex justify-center" aria-label="Mobile Advertisement Slot">
+        <div class="w-full max-w-[320px] sm:max-w-[728px] min-h-[90px] bg-slate-100 border border-dashed border-slate-300 rounded-lg flex flex-col items-center justify-center p-3 text-center">
+          <span class="ad-label">Advertisement</span>
+          <span class="text-xs font-mono text-slate-500">Responsive Banner Ad Slot</span>
+        </div>
+      </section>
+
+      <!-- INFORMATIONAL & SEO SECTION -->
+      <div class="mt-12 max-w-5xl mx-auto space-y-10">
+        
+        <!-- Section: How to create a QR code -->
+        <section id="how-it-works" class="bg-white border border-slate-200 rounded-xl p-6 sm:p-8">
+          <h2 class="text-xl font-bold text-slate-900 tracking-tight">How to Create a Free QR Code in 4 Steps</h2>
+          <div class="mt-6 grid grid-cols-1 sm:grid-cols-4 gap-6">
+            <div class="space-y-1.5">
+              <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">1</div>
+              <h3 class="text-sm font-semibold text-slate-900">Choose Type</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">Select from 9 supported types: Website URL / Link, Wi-Fi password, vCard contact, SMS, or Event.</p>
+            </div>
+            <div class="space-y-1.5">
+              <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">2</div>
+              <h3 class="text-sm font-semibold text-slate-900">Enter Details</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">Fill in the fields. The QR code renders instantly with zero latency directly in your browser.</p>
+            </div>
+            <div class="space-y-1.5">
+              <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">3</div>
+              <h3 class="text-sm font-semibold text-slate-900">Customize</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">Fine-tune colors, module styles, corner eyes, or embed your company logo with automatic Level H error recovery.</p>
+            </div>
+            <div class="space-y-1.5">
+              <div class="w-7 h-7 rounded-full bg-blue-100 text-blue-700 font-bold text-xs flex items-center justify-center">4</div>
+              <h3 class="text-sm font-semibold text-slate-900">Download Free</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">Save in high-resolution PNG, JPEG, or scalable vector SVG. No sign-up, no watermark, permanent lifetime validity.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: How QR Codes Work & Static vs Dynamic -->
+        <section id="static-vs-dynamic" class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="bg-white border border-slate-200 rounded-xl p-6">
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight">How QR Codes Actually Work</h2>
+            <p class="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+              A QR (Quick Response) code is a two-dimensional matrix barcode invented by Denso Wave in 1994. It consists of black and white square modules representing binary data.
+            </p>
+            <ul class="mt-4 space-y-2 text-xs text-slate-600">
+              <li class="flex items-start gap-2">
+                <span class="text-blue-600 font-bold">•</span>
+                <span><strong>Finder Patterns (Eyes):</strong> The three distinctive corner squares allow camera sensors to orient and read the code from any angle.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-blue-600 font-bold">•</span>
+                <span><strong>Timing Patterns:</strong> Alternating rows and columns establish coordinate grids across the code surface.</span>
+              </li>
+              <li class="flex items-start gap-2">
+                <span class="text-blue-600 font-bold">•</span>
+                <span><strong>Reed-Solomon Error Correction:</strong> Enables codes to be completely read even if up to 30% of the graphic is obscured or smudged.</span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="bg-white border border-slate-200 rounded-xl p-6">
+            <h2 class="text-lg font-bold text-slate-900 tracking-tight">Static vs. Dynamic QR Codes</h2>
+            <div class="mt-3 space-y-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <p>
+                <strong>Static QR Codes (CleanQR):</strong> The destination URL or data is encoded directly into the pixel pattern. They require no intermediate redirect servers, collect zero tracking telemetry, and <strong>never expire</strong>.
+              </p>
+              <p>
+                <strong>Dynamic QR Codes (Subscription Traps):</strong> Other websites route your scan through their server first. Once their trial expires, they break your printed materials and demand $20–$50/month to keep your links working.
+              </p>
+              <div class="p-3 bg-emerald-50 text-emerald-800 rounded-lg text-xs font-medium">
+                CleanQR generates 100% static codes. Your codes belong to you forever.
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Section: How to make QR codes scan reliably -->
+        <section class="bg-white border border-slate-200 rounded-xl p-6 sm:p-8">
+          <h2 class="text-lg font-bold text-slate-900 tracking-tight">Best Practices for 100% Scan Reliability</h2>
+          <div class="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs sm:text-sm text-slate-600">
+            <div>
+              <h3 class="font-semibold text-slate-900 mb-1">Maintain High Contrast</h3>
+              <p>Always ensure dark foreground dots against a light background. Light codes on dark backdrops can fail in older camera apps.</p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-slate-900 mb-1">Preserve the Quiet Zone</h3>
+              <p>Keep at least 4 modules of empty border space around the QR code so camera sensors can isolate the code from background clutter.</p>
+            </div>
+            <div>
+              <h3 class="font-semibold text-slate-900 mb-1">Size for Distance</h3>
+              <p>For business cards, use at least 2 × 2 cm (0.8 × 0.8 in). For posters or banners, calculate a 10:1 viewing distance ratio.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="bg-white border border-slate-200 rounded-xl p-6 sm:p-8">
+          <h2 class="text-xl font-bold text-slate-900 tracking-tight">Frequently Asked Questions</h2>
+          <div class="mt-6 space-y-4">
+            <details class="group border-b border-slate-200 pb-4">
+              <summary class="flex justify-between items-center font-semibold text-sm text-slate-900 cursor-pointer list-none">
+                <span>Are the QR codes generated really free forever?</span>
+                <span class="transition group-open:rotate-180">
+                  <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </span>
+              </summary>
+              <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                Yes. CleanQR encodes pure static data. The resulting image contains your content directly. Because there are no backend servers handling redirects, there are no ongoing costs, and your QR code will work as long as the printed medium survives.
+              </p>
+            </details>
+
+            <details class="group border-b border-slate-200 pb-4">
+              <summary class="flex justify-between items-center font-semibold text-sm text-slate-900 cursor-pointer list-none">
+                <span>Can I use the QR codes on commercial merchandise and packaging?</span>
+                <span class="transition group-open:rotate-180">
+                  <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </span>
+              </summary>
+              <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                Yes. You may print them on restaurant menus, food packaging, business cards, flyers, and billboards without restriction or watermark.
+              </p>
+            </details>
+
+            <details class="group border-b border-slate-200 pb-4">
+              <summary class="flex justify-between items-center font-semibold text-sm text-slate-900 cursor-pointer list-none">
+                <span>How does Wi-Fi QR code scanning work?</span>
+                <span class="transition group-open:rotate-180">
+                  <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </span>
+              </summary>
+              <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                When an iPhone Camera or Android Google Lens scans a Wi-Fi QR code formatted with the standard WIFI specification, the device automatically prompts "Join Network" without needing to type long passwords manually.
+              </p>
+            </details>
+
+            <details class="group border-b border-slate-200 pb-4">
+              <summary class="flex justify-between items-center font-semibold text-sm text-slate-900 cursor-pointer list-none">
+                <span>Does adding a logo make the QR code harder to scan?</span>
+                <span class="transition group-open:rotate-180">
+                  <svg class="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+                </span>
+              </summary>
+              <p class="text-xs sm:text-sm text-slate-600 mt-2 leading-relaxed">
+                CleanQR automatically upgrades Error Correction to Level H (High, 30% recovery) when a logo is attached and places a protective background shield around your emblem. This ensures the remaining 70% of the matrix retains all data needed for instant decoding.
+              </p>
+            </details>
+          </div>
+        </section>
+
+      </div>
+    </main>
+
+    <!-- Footer: Clean & Multi-Utility Ready -->
+    <footer class="mt-16 bg-white border-t border-slate-200 py-10">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8 text-sm">
+          <div>
+            <div class="mb-3">
+              <img src="./assets/img/IMG_20261002_051242_302.jpg" alt="CleanQR" class="h-6 max-h-6 w-auto object-contain" />
+            </div>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              Fast, privacy-focused client-side utilities. Free forever with zero sign-up or telemetry.
+            </p>
+          </div>
+
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-3">Utilities</span>
+            <ul class="space-y-2 text-xs text-slate-600">
+              <li><a href="./qr-code-generator/" class="hover:text-blue-600 font-medium">QR Code Generator</a></li>
+              <li class="text-slate-400">Image Color Picker <span class="text-[10px] text-slate-400">(Soon)</span></li>
+              <li class="text-slate-400">Percentage Calculator <span class="text-[10px] text-slate-400">(Soon)</span></li>
+              <li class="text-slate-400">Tip Calculator <span class="text-[10px] text-slate-400">(Soon)</span></li>
+            </ul>
+          </div>
+
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-3">Company & Trust</span>
+            <ul class="space-y-2 text-xs text-slate-600">
+              <li><a href="./about/" class="hover:text-blue-600">About CleanQR</a></li>
+              <li><a href="./privacy/" class="hover:text-blue-600">Privacy Policy</a></li>
+              <li><a href="./terms/" class="hover:text-blue-600">Terms of Service</a></li>
+              <li><a href="./contact/" class="hover:text-blue-600">Contact & Support</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-3">Privacy Guarantee</span>
+            <p class="text-xs text-slate-500 leading-relaxed">
+              CleanQR never sends your QR content or uploaded logos to any server. All processing runs in your browser sandbox.
+            </p>
+          </div>
+        </div>
+
+        <div class="pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-2">
+          <span>&copy; 2026 CleanQR. All rights reserved.</span>
+          <span>100% Client-Side Static Architecture</span>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Toast Notification Overlay -->
+    <div id="toast-notification" class="hidden fixed bottom-6 right-6 z-50 px-4 py-2.5 rounded-lg text-white text-xs font-medium shadow-lg transition-opacity duration-300 pointer-events-none" role="status"></div>
+
+    <!-- Application Script Bundle -->
+    <script type="module" src="/assets/js/app.js"></script>
+  </body>
+</html>

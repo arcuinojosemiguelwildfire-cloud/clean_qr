@@ -1,0 +1,6 @@
+{
+  "name": "CleanQR – Free Private QR Code Generator",
+  "description": "Generate custom, scan-safe QR codes instantly in your browser with zero sign-up, zero watermarks, and 100% client-side privacy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
